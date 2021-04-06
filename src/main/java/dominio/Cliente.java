@@ -33,6 +33,10 @@ public class Cliente {
         this.saldo = saldo;
     }
 
+    public Cliente(String nombre, String email, String telefono, double saldo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public int getIdCliente() {
         return idCliente;
     }

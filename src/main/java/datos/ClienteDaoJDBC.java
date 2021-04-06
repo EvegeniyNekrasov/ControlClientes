@@ -6,19 +6,19 @@ import java.util.*;
 
 public class ClienteDaoJDBC {
 
-    private static final String SQL_SELECT = "SELECT id_cliente, nombre, apellido, email, telefono, saldo"
-            + " From cliente";
+    private static final String SQL_SELECT = "SELECT id_cliente, nombre, apellido, email, telefono, saldo "
+            + " FROM cliente";
 
-    private static final String SQL_SELECT_BY_ID = "SELECT id_cliente, nombre, apellido, email, telefono, saldo"
-            + " From cliente WHERE id_cliente = ?";
+    private static final String SQL_SELECT_BY_ID = "SELECT id_cliente, nombre, apellido, email, telefono, saldo "
+            + " FROM cliente WHERE id_cliente = ?";
 
-    private static final String SQL_INSERT = "INSERT INTO cliente(nombre, apellido, email, telefono, saldo "
+    private static final String SQL_INSERT = "INSERT INTO cliente(nombre, apellido, email, telefono, saldo) "
             + " VALUES(?, ?, ?, ?, ?)";
 
     private static final String SQL_UPDATE = "UPDATE cliente "
             + " SET nombre=?, apellido=?, email=?, telefono=?, saldo=? WHERE id_cliente=?";
 
-    private static final String SQL_DELETE = "DELETE FROM cliente WHTERE id_cliente = ?";
+    private static final String SQL_DELETE = "DELETE FROM cliente WHERE id_cliente = ?";
 
     public List<Cliente> listar() throws ClassNotFoundException {
         Connection conn = null;
@@ -48,7 +48,6 @@ public class ClienteDaoJDBC {
             Conexion.close(stmt);
             Conexion.close(conn);
         }
-
         return clientes;
     }
 
@@ -61,19 +60,20 @@ public class ClienteDaoJDBC {
             stmt = conn.prepareStatement(SQL_SELECT_BY_ID);
             stmt.setInt(1, cliente.getIdCliente());
             rs = stmt.executeQuery();
-            rs.absolute(1);// nos posicionamos en el primer registro devuelto
+            rs.absolute(1);//nos posicionamos en el primer registro devuelto
 
             String nombre = rs.getString("nombre");
             String apellido = rs.getString("apellido");
-            String telefono = rs.getString("telefono");
             String email = rs.getString("email");
+            String telefono = rs.getString("telefono");
             double saldo = rs.getDouble("saldo");
 
             cliente.setNombre(nombre);
             cliente.setApellido(apellido);
-            cliente.setEmail(telefono);
             cliente.setEmail(email);
+            cliente.setTelefono(telefono);
             cliente.setSaldo(saldo);
+
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
         } finally {
@@ -81,7 +81,6 @@ public class ClienteDaoJDBC {
             Conexion.close(stmt);
             Conexion.close(conn);
         }
-
         return cliente;
     }
 
@@ -99,7 +98,6 @@ public class ClienteDaoJDBC {
             stmt.setDouble(5, cliente.getSaldo());
 
             rows = stmt.executeUpdate();
-
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
         } finally {
@@ -130,7 +128,6 @@ public class ClienteDaoJDBC {
             Conexion.close(stmt);
             Conexion.close(conn);
         }
-
         return rows;
     }
 
@@ -150,7 +147,7 @@ public class ClienteDaoJDBC {
             Conexion.close(stmt);
             Conexion.close(conn);
         }
-
         return rows;
     }
+
 }
